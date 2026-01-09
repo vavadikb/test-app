@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef } from "react";
 import { ResponsiveContainer, AreaChart, Area, Tooltip, XAxis, YAxis } from "recharts";
+import type { TooltipProps } from "recharts";
 import type { ProfitSeries } from "../types";
 
 type Props = {
@@ -50,19 +51,16 @@ export function ProfitChart({ series, loading, onHover }: Props) {
     onHover?.(null);
   }, [onHover]);
 
-  const renderTooltip = useCallback(
-    (props: { active?: boolean; payload?: ReadonlyArray<{ payload: ProfitSeries["points"][number] }> }) => {
-      if (props.active && props.payload && props.payload.length > 0) {
-        const point = props.payload[0].payload;
-        if (lastPointRef.current?.timestamp !== point.timestamp) {
-          lastPointRef.current = point;
-          onHover?.(point);
-        }
+  const renderTooltip = useCallback((props: TooltipProps<number, string>) => {
+    const point = props.payload?.[0]?.payload as ProfitSeries["points"][number] | undefined;
+    if (props.active && point) {
+      if (lastPointRef.current?.timestamp !== point.timestamp) {
+        lastPointRef.current = point;
+        onHover?.(point);
       }
-      return null;
-    },
-    [onHover]
-  );
+    }
+    return null;
+  }, [onHover]);
 
   if (data.length === 0) {
     return (
@@ -93,7 +91,7 @@ export function ProfitChart({ series, loading, onHover }: Props) {
           />
           <YAxis domain={[minValue, maxValue]} hide />
           <Tooltip
-            content={renderTooltip}
+            content={renderTooltip as TooltipProps<number, string>["content"]}
             cursor={{ stroke: "#FF5100", strokeWidth: 1, strokeDasharray: "3 3" }}
           />
           <Area
