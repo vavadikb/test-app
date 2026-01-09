@@ -1,0 +1,8 @@
+declare namespace JSX {
+  interface IntrinsicElements {
+    "number-flow": React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLElement>,
+      HTMLElement
+    >;
+  }
+}

@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --bg: #7a3b16;
+  --orange-primary: #ff5100;
+  --orange-light: rgba(255, 81, 0, 0.1);
+  --orange-avatar: rgba(255, 81, 0, 0.6);
+  --text-primary: #0f0f0f;
+  --text-secondary: #868686;
+  --green-profit: #3cab68;
+  --red-loss: #ef4444;
+  --bg-white: #ffffff;
+  --border-card: #e5e5e5;
+  --bg-button-secondary: #f8f8f8;
+  --border-button-secondary: #e1e1e1;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  @apply min-h-screen bg-[color:var(--bg)] text-neutral-900 font-sans antialiased;
+  background-color: var(--bg);
+}
+
+* {
+  @apply selection:bg-accent selection:text-white;
+}
+
+.card {
+  @apply bg-white rounded-[14px] border border-[color:var(--border-card)];
+  box-shadow: var(--shadow-card);
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-[10px] px-4 py-3 font-medium transition;
+}
+
+.btn-primary {
+  @apply bg-accent text-white hover:bg-[#e64700] active:scale-[0.99];
+}
+
+.btn-secondary {
+  @apply bg-[color:var(--bg-button-secondary)] text-neutral-800 border border-[color:var(--border-button-secondary)] hover:border-neutral-300 active:scale-[0.99];
+}
